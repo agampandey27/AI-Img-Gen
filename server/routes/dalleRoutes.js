@@ -10,10 +10,11 @@ const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) {
   console.error("API key not found in environment variables.");
-  process.exit(1);
+  process.exit(1); // Exit process if API key is not found
 }
 
-const apiBaseUrl = "https://api.limewire.com/api/image/generation";
+// Define the base URL for the hypothetical FreeImageAPI
+const apiBaseUrl = "https://api.limewire.com/api/image/generation"; // Replace with the actual base URL from FreeImageAPI
 
 router.route("/").get((req, res) => {
   res.send("Hello from Dalle");
@@ -21,24 +22,26 @@ router.route("/").get((req, res) => {
 
 router.route("/").post(async (req, res) => {
   try {
-    const { prompt, samples = 1, quality = "HIGH", aspect_ratio = "1:1" } = req.body;
+    const { prompt } = req.body;
 
-    const response = await axios.post(`${apiBaseUrl}`, {
-      prompt,
-      samples,
-      quality,
-      aspect_ratio,
-    }, {
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-Api-Version': 'v1',
+    const response = await axios.post(
+      `${apiBaseUrl}`,
+      {
+        prompt,
       },
-    });
+      {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Api-Version': 'v1',
+        },
+      }
+    );
 
     const imageData = response.data;
 
+    // Assuming imageData contains the 'data' array with 'url' field in each object
     res.status(200).json(imageData);
 
   } catch (error) {
