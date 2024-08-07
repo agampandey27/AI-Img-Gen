@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Loader, Card, FormField } from '../components';
+import Footer from '../components/Footer';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -100,6 +101,7 @@ const Home = () => {
           </>
         )}
       </div>
+      <Footer />
     </section>
   );
 };
